@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>З 8 Березня!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a0033;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            flex-direction: column;
+            padding: 10px;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 90%;
+        }
+        h1 {
+            font-size: 2em;
+        }
+        p {
+            font-size: 1em;
+            max-width: 100%;
+            margin: auto;
+        }
+        .photo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .photo-container img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid #ff00ff;
+            box-shadow: 0px 0px 10px rgba(255, 0, 255, 0.7);
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            p {
+                font-size: 0.9em;
+            }
+            .photo-container img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <div class="container">
+        <h1>Моя кицюня!</h1>
+        <p>В цей чарівний день 8 березня хочу сказати, що ти – справжнє диво у моєму житті. Ти – як зірка, що освітлює найтемніші ночі, як мелодія, що робить серце легшим, як подих весни, що пробуджує все навколо.</p>
+        <p>Нехай кожен твій день буде сповнений тепла, радості та усмішок. Ти заслуговуєш тільки найкращого! Я безмежно ціную тебе і радію, що ти є у моєму житті.</p>
+        <p>💜 З любов’ю, твій любименький.</p>
+        <div class="photo-container">
+            <img src="1.jpg" alt="Кохана">
+            <img src="2.jpg" alt="Кохана">
+            <img src="3.jpg" alt="Кохана">
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 1.5;
+                this.speedY = (Math.random() - 0.5) * 1.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = "#ff00ff";
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 100; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        createParticles();
+        animateParticles();
+    </script>
+</body>
+</html>
